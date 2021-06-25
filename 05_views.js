@@ -23,27 +23,34 @@ const intro = magpieViews.view_generator("intro", {
   trials: 1,
   name: 'intro',
   // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-  text: `This is a sample introduction view.
+  text: `Thank you for participating in our small experiment!
             <br />
             <br />
-            The introduction view welcomes the participant and gives general information
-            about the experiment. You are in the <strong>${coin}</strong> group.
-            <br />
-            <br />
-            This is a minimal experiment with one forced choice view. It can serve as a starting point for programming your own experiment.`,
-  buttonText: 'begin the experiment'
+            To start, please klick the button below.`,
+  buttonText: 'Begin the experiment'
 });
 
 // For most tasks, you need instructions views
-const instructions = magpieViews.view_generator("instructions", {
+const instructions_practice = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'instructions',
-  title: 'General Instructions',
-  text: `This is a sample instructions view.
+  title: 'Practice Instructions',
+  text: `In this experiment you will see pictures showing pairs of geometrical objects. Your task is to compare the two objects and decide whether they are the same or different. You have to press the button "F" if you think they are the same and the button "J" for when you think they are different. Please try to answer as fast and precise as possible!
             <br />
             <br />
-            Tell your participants what they are to do here.`,
-  buttonText: 'go to trials'
+            To make sure you know exactly what to do, we will practice this first!`,
+  buttonText: 'Go to practice trials'
+});
+
+const instructions_main = magpieViews.view_generator("instructions", {
+  trials: 1,
+  name: 'instructions',
+  title: 'Main Instructions',
+  text: `Now starts the main part of the experiment. You can take a break now and start when ever you are ready. Please remember to answer as fast and precise as possible!
+            <br />
+            <br />
+            Klick the button below to start`,
+  buttonText: 'Go to main trials'
 });
 
 
@@ -52,22 +59,22 @@ const post_test = magpieViews.view_generator("post_test", {
   trials: 1,
   name: 'post_test',
   title: 'Additional information',
-  text: 'Answering the following questions is optional, but your answers will help us analyze our results.'
+  text: 'Answering the following questions is optional, but your answers will help us analyze our results.',
 
   // You can change much of what appears here, e.g., to present it in a different language, as follows:
-  // buttonText: 'Weiter',
-  // age_question: 'Alter',
-  // gender_question: 'Geschlecht',
-  // gender_male: 'männlich',
-  // gender_female: 'weiblich',
-  // gender_other: 'divers',
-  // edu_question: 'Höchster Bildungsabschluss',
-  // edu_graduated_high_school: 'Abitur',
-  // edu_graduated_college: 'Hochschulabschluss',
-  // edu_higher_degree: 'Universitärer Abschluss',
+  buttonText: 'Weiter',
+  age_question: 'Alter',
+  gender_question: 'Geschlecht',
+  gender_male: 'männlich',
+  gender_female: 'weiblich',
+  gender_other: 'divers',
+  //edu_question: 'Höchster Bildungsabschluss',
+  //edu_graduated_high_school: 'Abitur',
+  //edu_graduated_college: 'Hochschulabschluss',
+  //edu_higher_degree: 'Universitärer Abschluss',
   // languages_question: 'Muttersprache',
   // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
-  // comments_question: 'Weitere Kommentare'
+  comments_question: 'Weitere Kommentare'
 });
 
 // The 'thanks' view is crucial; never delete it; it submits the results!
@@ -102,17 +109,23 @@ const thanks = magpieViews.view_generator("thanks", {
 */
 
 
-// Here, we initialize a normal forced_choice view
-const forced_choice_2A = magpieViews.view_generator("forced_choice", {
-  // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
-  trials: trial_info.forced_choice.length,
-  // name should be identical to the variable name
-  name: 'forced_choice_2A',
-  data: trial_info.forced_choice,
-  // you can add custom functions at different stages through a view's life cycle
-  // hook: {
-  //     after_response_enabled: check_response
-  // }
+// Initialize a keyPress task
+const key_press_practice = magpieViews.view_generator('key_press',{
+    trials: practice_trials.keyPress.practice.length,
+    name: 'key_press_practice',
+    data: _.shuffle(practice_trials.keyPress.practice),
+    pause: 250,
+    hook: {
+        //after_response_enabled: time_limit
+        //after_response_enabled: check_response
+    }
+});
+
+const key_press_main = magpieViews.view_generator('key_press',{
+    trials: main_trials.keyPress.main.length,
+    name: 'key_press_main',
+    data: _.shuffle(main_trials.keyPress.main),
+    pause: 250,
 });
 
 // There are many more templates available:

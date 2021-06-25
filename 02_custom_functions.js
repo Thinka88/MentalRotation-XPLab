@@ -31,7 +31,7 @@ const generateID = function(len) {
 
 
 
-/* Hooks  
+/* Hooks
 *
 *
 */
@@ -44,18 +44,18 @@ const time_limit = function(data, next) {
     // Add timeouts to the timeoutarray
     // Reminds the participant to respond after 5 seconds
     window.timeout.push(setTimeout(function(){
-          $('#reminder').text('Please answer more quickly!');
-    }, 5000));
+         alert('Please answer more quickly!');
+    }, 7500));
     next();
 };
 
 // compares the chosen answer to the value of `option1`
 check_response = function(data, next) {
     $('input[name=answer]').on('change', function(e) {
-        if (e.target.value === data.correct) {
+        if (e.target.value === data.expected) {
             alert('Your answer is correct! Yey!');
         } else {
-            alert('Sorry, this answer is incorrect :( The correct answer was ' + data.correct);
+            alert('Sorry, this answer is incorrect :( The correct answer was ' + data.expected);
         }
         next();
     })
